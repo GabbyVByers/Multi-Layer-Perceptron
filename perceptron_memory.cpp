@@ -1,5 +1,6 @@
 
 #include "perceptron.h"
+#include "random.h"
 
 void Perceptron::mallocNetwork()
 {
@@ -65,5 +66,28 @@ void Perceptron::freeNetwork()
 	delete[] z_values;
 	delete[] dCdz;
 	delete[] expectedValues;
+}
+
+inline static float randf()
+{
+	return randomFloat(-1.0f, 1.0f);
+}
+
+void Perceptron::initWeightsAndBiasesWithRandomValues()
+{
+	for (int L = 1; L < numLayers; L++)
+	{
+		int J = networkStructure[L];
+		int K = networkStructure[L - 1];
+
+		for (int j = 0; j < J; j++)
+		{
+			biases[L][j] = randf();
+			for (int k = 0; k < K; k++)
+			{
+				weights[L][j][k] = randf();
+			}
+		}
+	}
 }
 

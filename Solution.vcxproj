@@ -92,6 +92,7 @@
     <ClCompile Include="opengl_user_input.cpp" />
     <ClCompile Include="opengl_utilities.cpp" />
     <ClCompile Include="perceptron_memory.cpp" />
+    <ClCompile Include="perceptron_propagate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />

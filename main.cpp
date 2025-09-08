@@ -8,7 +8,6 @@ int main()
 		Perceptron Perceptron;
 	}
 
-
 	OpenGL OpenGL(1920, 1080, "Multi-Layer Perceptron");
 
 	while (OpenGL.isAlive())

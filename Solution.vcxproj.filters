@@ -79,6 +79,9 @@
     <ClCompile Include="perceptron_memory.cpp">
       <Filter>Modules\Perceptron</Filter>
     </ClCompile>
+    <ClCompile Include="perceptron_propagate.cpp">
+      <Filter>Modules\Perceptron</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">

@@ -21,6 +21,7 @@ public:
 	{
 		numLayers = networkStructure.size();
 		mallocNetwork();
+		initWeightsAndBiasesWithRandomValues();
 	}
 
 	~Perceptron()
@@ -28,7 +29,13 @@ public:
 		freeNetwork();
 	}
 
+	// memory
 	void mallocNetwork();
 	void freeNetwork();
+	void initWeightsAndBiasesWithRandomValues();
+
+	// propagate
+	void propagateForwards();
+	void propagateBackwards();
 };
 
