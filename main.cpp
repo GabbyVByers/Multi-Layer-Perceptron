@@ -12,9 +12,7 @@ int main()
 	{
 		OpenGL.processInput();
 		OpenGL.clearScreen();
-		OpenGL.renderLines();
-		OpenGL.renderCircles();
-		OpenGL.renderGUI();
+		OpenGL.renderNetwork();
 		OpenGL.swapBuffers();
 	}
 

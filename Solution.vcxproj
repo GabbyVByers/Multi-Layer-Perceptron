@@ -94,6 +94,7 @@
     <ClCompile Include="opengl_utilities.cpp" />
     <ClCompile Include="perceptron_memory.cpp" />
     <ClCompile Include="perceptron_propagate.cpp" />
+    <ClCompile Include="profiler_members.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
@@ -117,6 +118,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="opengl.h" />
     <ClInclude Include="perceptron.h" />
+    <ClInclude Include="profiler.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="sigmoid.h" />
     <ClInclude Include="vec2f.h" />

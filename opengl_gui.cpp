@@ -18,8 +18,8 @@ void OpenGL::renderGUI()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("GUI");
-	ImGui::Text("Example Text");
+	ImGui::Begin("Debugger");
+	ImGui::Text("Rendering Time (ms): %g", renderingTime);
 	ImGui::End();
 
 	ImGui::Render();

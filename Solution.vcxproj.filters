@@ -34,6 +34,9 @@
     <Filter Include="Modules\Perceptron">
       <UniqueIdentifier>{d20e4c8c-2506-4e3f-8d68-06cfcbb96ed7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Modules\Profiler">
+      <UniqueIdentifier>{8454f06d-58ae-4fa5-84c6-4c98d682c806}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -85,6 +88,9 @@
     <ClCompile Include="opengl_geometry.cpp">
       <Filter>Modules\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="profiler_members.cpp">
+      <Filter>Modules\Profiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -128,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="perceptron.h">
       <Filter>Modules\Perceptron</Filter>
+    </ClInclude>
+    <ClInclude Include="profiler.h">
+      <Filter>Modules\Profiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

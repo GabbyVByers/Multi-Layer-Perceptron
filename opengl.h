@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "perceptron.h"
+#include "profiler.h"
 #include "vec2f.h"
 
 struct CircleVertex
@@ -33,8 +34,11 @@ class OpenGL
 public:
 	
 	GLFWwindow* window = nullptr;
+	Profiler profiler;
+	double renderingTime = 0.0;
 
 	Perceptron* perceptron = nullptr;
+	bool drawInputLayerWeights = true;
 	std::vector<std::vector<Vec2f>> networkGeometry;
 	std::vector<CircleVertex> circleVertices;
 	std::vector<LineVertex> lineVertices;
@@ -57,9 +61,11 @@ public:
 	void swapBuffers();
 	std::string loadSourceFile(std::string filePath);
 
+	// rendering
+	void constructNetworkGeometry();
+	void renderNetwork();
 
 	// circles
-	void constructNetworkGeometry();
 	void initCircleRendering();
 	void renderCircles();
 

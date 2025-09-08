@@ -52,6 +52,31 @@ void OpenGL::renderLines()
 	glUseProgram(lineShaderProgram);
 	glUniform2f(glGetUniformLocation(lineShaderProgram, "uScreenDimensions"), (float)width, (float)height);
 
+	lineVertices.clear();
+	int numLayers = perceptron->networkStructure.size();
+	int startLayer = (drawInputLayerWeights) ? 1 : 2;
+	for (int L = startLayer; L < numLayers; L++)
+	{
+		auto& previous_layer_geometry = networkGeometry[L - 1];
+		auto& layer_geometry = networkGeometry[L];
+
+		int K = perceptron->networkStructure[L - 1];
+		int J = perceptron->networkStructure[L];
+
+		for (int j = 0; j < J; j++)
+		{
+			Vec2f& neuron_pos = layer_geometry[j];
+			for (int k = 0; k < K; k++)
+			{
+				Vec2f& prevous_neuron_pos = previous_layer_geometry[k];
+				float weight = perceptron->weights[L][j][k];
+				float trans = (L == 1) ? 0.1f : 0.4f;
+				lineVertices.push_back({ neuron_pos.x, neuron_pos.y, weight, trans });
+				lineVertices.push_back({ prevous_neuron_pos.x, prevous_neuron_pos.y, weight, trans });
+			}
+		}
+	}
+
 	if (lineVertices.size() == 0) return;
 	glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertex) * lineVertices.size(), &lineVertices[0], GL_STATIC_DRAW);
 	glDrawArrays(GL_LINES, 0, (GLsizei)lineVertices.size());

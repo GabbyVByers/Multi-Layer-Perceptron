@@ -4,7 +4,7 @@
 
 struct DrawingParameters
 {
-	float radius = 0.018f;
+	float radius = 0.020f;
 	float margin = 0.0012f;
 	float stride = 0.4f;
 	float spacing = 0.045f;
@@ -57,7 +57,8 @@ void OpenGL::constructNetworkGeometry()
 		}
 	}
 
-	for (int L = 1; L < numLayers; L++)
+	int startLayer = (drawInputLayerWeights) ? 1 : 2;
+	for (int L = startLayer; L < numLayers; L++)
 	{
 		auto& previous_layer_geometry = networkGeometry[L - 1];
 		auto& layer_geometry = networkGeometry[L];
@@ -78,5 +79,15 @@ void OpenGL::constructNetworkGeometry()
 			}
 		}
 	}
+}
+
+void OpenGL::renderNetwork()
+{
+	profiler.start();
+	renderLines();
+	renderCircles();
+	renderGUI();
+	profiler.stop();
+	renderingTime = profiler.time();
 }
 
