@@ -15,6 +15,15 @@
 #include "profiler.h"
 #include "vec2f.h"
 
+struct DrawingParameters
+{
+	float radius = 0.020f;
+	float margin = 0.0012f;
+	float stride = 0.4f;
+	float spacing = 0.045f;
+	float output_spacing = 0.075f;
+};
+
 struct CircleVertex
 {
 	float x, y;

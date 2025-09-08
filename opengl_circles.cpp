@@ -52,6 +52,22 @@ void OpenGL::renderCircles()
 	glUseProgram(circleShaderProgram);
 	glUniform2f(glGetUniformLocation(circleShaderProgram, "uScreenDimensions"), (float)width, (float)height);
 	
+	DrawingParameters dp;
+	circleVertices.clear();
+	int numLayers = perceptron->networkStructure.size();
+	for (int L = 0; L < numLayers; L++)
+	{
+		auto& layer = networkGeometry[L];
+		int J = perceptron->networkStructure[L];
+		for (int j = 0; j < J; j++)
+		{
+			auto& neuron_pos = layer[j];
+			float activation = perceptron->activations[L][j];
+			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, 1.0f, dp.radius });
+			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, activation, dp.radius - dp.margin });
+		}
+	}
+
 	if (circleVertices.size() == 0) return;
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CircleVertex) * circleVertices.size(), &circleVertices[0], GL_STATIC_DRAW);
 	glDrawArrays(GL_POINTS, 0, (GLsizei)circleVertices.size());

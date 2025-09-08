@@ -2,15 +2,6 @@
 #include "opengl.h"
 #include "random.h"
 
-struct DrawingParameters
-{
-	float radius = 0.020f;
-	float margin = 0.0012f;
-	float stride = 0.4f;
-	float spacing = 0.045f;
-	float output_spacing = 0.075f;
-};
-
 void OpenGL::constructNetworkGeometry()
 {
 	DrawingParameters dp;
@@ -41,42 +32,6 @@ void OpenGL::constructNetworkGeometry()
 			position.x = dp.stride * (float)L;
 			position.y = (spacing * j) - (spacing * (J - 1) * 0.5f);
 			networkGeometry[L][j] = position;
-		}
-	}
-
-	for (int L = 0; L < numLayers; L++)
-	{
-		auto& layer = networkGeometry[L];
-		int J = perceptron->networkStructure[L];
-		for (int j = 0; j < J; j++)
-		{
-			auto& neuron_pos = layer[j];
-			float activation = perceptron->activations[L][j];
-			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, 1.0f, dp.radius });
-			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, activation, dp.radius - dp.margin });
-		}
-	}
-
-	int startLayer = (drawInputLayerWeights) ? 1 : 2;
-	for (int L = startLayer; L < numLayers; L++)
-	{
-		auto& previous_layer_geometry = networkGeometry[L - 1];
-		auto& layer_geometry = networkGeometry[L];
-
-		int K = perceptron->networkStructure[L - 1];
-		int J = perceptron->networkStructure[L];
-
-		for (int j = 0; j < J; j++)
-		{
-			Vec2f& neuron_pos = layer_geometry[j];
-			for (int k = 0; k < K; k++)
-			{
-				Vec2f& prevous_neuron_pos = previous_layer_geometry[k];
-				float weight = perceptron->weights[L][j][k];
-				float trans = (L == 1) ? 0.1f : 0.4f;
-				lineVertices.push_back({ neuron_pos.x, neuron_pos.y, weight, trans });
-				lineVertices.push_back({ prevous_neuron_pos.x, prevous_neuron_pos.y, weight, trans });
-			}
 		}
 	}
 }
