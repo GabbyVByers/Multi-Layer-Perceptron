@@ -91,6 +91,7 @@
     <ClCompile Include="opengl_lines.cpp" />
     <ClCompile Include="opengl_user_input.cpp" />
     <ClCompile Include="opengl_utilities.cpp" />
+    <ClCompile Include="perceptron_memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
