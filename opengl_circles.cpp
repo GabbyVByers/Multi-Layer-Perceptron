@@ -2,13 +2,6 @@
 #include "opengl.h"
 #include "random.h"
 
-struct CircleVertex
-{
-	float x, y;
-	float r, g, b;
-	float radius;
-};
-
 void OpenGL::initCircleRendering()
 {
 	glGenVertexArrays(1, &circleVAO);
@@ -19,9 +12,9 @@ void OpenGL::initCircleRendering()
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(CircleVertex), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(CircleVertex), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(CircleVertex), (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(CircleVertex), (void*)(5 * sizeof(float)));
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(CircleVertex), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
 	std::string vert = loadSourceFile("glsl_circle.vert");
@@ -47,21 +40,20 @@ void OpenGL::initCircleRendering()
 	glDeleteShader(fragmentShader);
 
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void OpenGL::renderCircles()
 {
+	int width, height; glfwGetFramebufferSize(window, &width, &height);
 	glBindVertexArray(circleVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
 	glUseProgram(circleShaderProgram);
-	std::vector<CircleVertex> circleVertices;
-
+	glUniform2f(glGetUniformLocation(circleShaderProgram, "uScreenDimensions"), (float)width, (float)height);
 	
-
 	if (circleVertices.size() == 0) return;
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CircleVertex) * circleVertices.size(), &circleVertices[0], GL_STATIC_DRAW);
-	int width, height; glfwGetFramebufferSize(window, &width, &height);
-	glUniform2f(glGetUniformLocation(circleShaderProgram, "uScreenDimensions"), (float)width, (float)height);
 	glDrawArrays(GL_POINTS, 0, (GLsizei)circleVertices.size());
 }
 

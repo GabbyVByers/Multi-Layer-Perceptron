@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="opengl_circles.cpp" />
+    <ClCompile Include="opengl_geometry.cpp" />
     <ClCompile Include="opengl_gui.cpp" />
     <ClCompile Include="opengl_lines.cpp" />
     <ClCompile Include="opengl_user_input.cpp" />

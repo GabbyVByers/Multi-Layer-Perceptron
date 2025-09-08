@@ -2,12 +2,6 @@
 #include "opengl.h"
 #include "sigmoid.h"
 
-struct LineVertex
-{
-	float x, y;
-	float r, g, b;
-};
-
 void OpenGL::initLineRendering()
 {
 	glGenVertexArrays(1, &lineVAO);
@@ -18,8 +12,10 @@ void OpenGL::initLineRendering()
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(LineVertex), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(LineVertex), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(LineVertex), (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(LineVertex), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	std::string vert = loadSourceFile("glsl_line.vert");
 	std::string frag = loadSourceFile("glsl_line.frag");
@@ -44,21 +40,20 @@ void OpenGL::initLineRendering()
 	glDeleteShader(fragmentShader);
 
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void OpenGL::renderLines()
 {
+	int width, height; glfwGetFramebufferSize(window, &width, &height);
 	glBindVertexArray(lineVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
 	glUseProgram(lineShaderProgram);
-	std::vector<LineVertex> lineVertices;
-
-
+	glUniform2f(glGetUniformLocation(lineShaderProgram, "uScreenDimensions"), (float)width, (float)height);
 
 	if (lineVertices.size() == 0) return;
 	glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertex) * lineVertices.size(), &lineVertices[0], GL_STATIC_DRAW);
-	int width, height; glfwGetFramebufferSize(window, &width, &height);
-	glUniform2f(glGetUniformLocation(lineShaderProgram, "uScreenDimensions"), (float)width, (float)height);
 	glDrawArrays(GL_LINES, 0, (GLsizei)lineVertices.size());
 }
 

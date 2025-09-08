@@ -89,5 +89,16 @@ void Perceptron::initWeightsAndBiasesWithRandomValues()
 			}
 		}
 	}
+
+	// for debugging purposes, I am also giving every activation a random value [0.0f, 1.0f];
+
+	for (int L = 0; L < numLayers; L++)
+	{
+		int J = networkStructure[L];
+		for (int j = 0; j < J; j++)
+		{
+			activations[L][j] = randomFloat(0.0f, 1.0f);
+		}
+	}
 }
 

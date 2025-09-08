@@ -6,8 +6,10 @@ inline void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-OpenGL::OpenGL(int initWidth, int initHeight, std::string title)
+OpenGL::OpenGL(int initWidth, int initHeight, std::string title, Perceptron* ptr)
 {
+	perceptron = ptr;
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -20,6 +22,7 @@ OpenGL::OpenGL(int initWidth, int initHeight, std::string title)
 	glViewport(0, 0, initWidth, initHeight);
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
+	constructNetworkGeometry();
 	initCircleRendering();
 	initLineRendering();
 	initImGui();

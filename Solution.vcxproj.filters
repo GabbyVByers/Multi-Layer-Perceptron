@@ -82,6 +82,9 @@
     <ClCompile Include="perceptron_propagate.cpp">
       <Filter>Modules\Perceptron</Filter>
     </ClCompile>
+    <ClCompile Include="opengl_geometry.cpp">
+      <Filter>Modules\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">

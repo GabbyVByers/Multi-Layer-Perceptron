@@ -11,11 +11,33 @@
 #include <iostream>
 #include <vector>
 
+#include "perceptron.h"
+#include "vec2f.h"
+
+struct CircleVertex
+{
+	float x, y;
+	float color;
+	float radius;
+};
+
+struct LineVertex
+{
+	float x, y;
+	float color;
+	float trans;
+};
+
 class OpenGL
 {
 public:
 	
 	GLFWwindow* window = nullptr;
+
+	Perceptron* perceptron = nullptr;
+	std::vector<std::vector<Vec2f>> networkGeometry;
+	std::vector<CircleVertex> circleVertices;
+	std::vector<LineVertex> lineVertices;
 
 	unsigned int circleShaderProgram;
 	unsigned int circleVAO;
@@ -25,8 +47,8 @@ public:
 	unsigned int lineVAO;
 	unsigned int lineVBO;
 
-	// Utilities
-	OpenGL(int initWidth, int initHeight, std::string title);
+	// utilities
+	OpenGL(int initWidth, int initHeight, std::string title, Perceptron* ptr);
 	~OpenGL();
 	bool isAlive();
 	void disableVSYNC();
@@ -35,19 +57,21 @@ public:
 	void swapBuffers();
 	std::string loadSourceFile(std::string filePath);
 
-	// Circle Rendering
+
+	// circles
+	void constructNetworkGeometry();
 	void initCircleRendering();
 	void renderCircles();
 
-	// Line Rendering
+	// lines
 	void initLineRendering();
 	void renderLines();
 
-	// GUI
+	// gui
 	void initImGui() const;
 	void renderGUI();
 
-	// User Input
+	// user_input
 	void processInput();
 };
 

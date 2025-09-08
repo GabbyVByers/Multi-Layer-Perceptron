@@ -7,7 +7,7 @@ class Perceptron
 public:
 
 	int numLayers = -1;
-	const std::vector<int> networkStructure = { 784, 16, 16, 10 };
+	const std::vector<int> networkStructure = { 784, 32, 32, 10 };
 
 	float*** weights = nullptr;
 	float** biases = nullptr;

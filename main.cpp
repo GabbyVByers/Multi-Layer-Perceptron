@@ -4,12 +4,10 @@
 
 int main()
 {
-	{
-		Perceptron Perceptron;
-	}
+	Perceptron perceptron;
+	OpenGL OpenGL(1920, 1080, "Multi-Layer Perceptron", &perceptron);
 
-	OpenGL OpenGL(1920, 1080, "Multi-Layer Perceptron");
-
+	OpenGL.disableVSYNC();
 	while (OpenGL.isAlive())
 	{
 		OpenGL.processInput();
