@@ -37,6 +37,9 @@
     <Filter Include="Modules\Profiler">
       <UniqueIdentifier>{8454f06d-58ae-4fa5-84c6-4c98d682c806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Miscellaneous Dependencies\ImPlot Files">
+      <UniqueIdentifier>{59b3284f-66be-4c15-b77e-467b63f192ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -91,6 +94,18 @@
     <ClCompile Include="profiler_members.cpp">
       <Filter>Modules\Profiler</Filter>
     </ClCompile>
+    <ClCompile Include="dataset_members.cpp">
+      <Filter>Modules\Training Data</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot.cpp">
+      <Filter>Miscellaneous Dependencies\ImPlot Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot_demo.cpp">
+      <Filter>Miscellaneous Dependencies\ImPlot Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot_items.cpp">
+      <Filter>Miscellaneous Dependencies\ImPlot Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -137,6 +152,15 @@
     </ClInclude>
     <ClInclude Include="profiler.h">
       <Filter>Modules\Profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="dataset.h">
+      <Filter>Modules\Training Data</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\implot.h">
+      <Filter>Miscellaneous Dependencies\ImPlot Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\implot_internal.h">
+      <Filter>Miscellaneous Dependencies\ImPlot Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

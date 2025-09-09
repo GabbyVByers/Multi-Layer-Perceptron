@@ -2,15 +2,30 @@
 #include "perceptron.h"
 #include "random.h"
 
+Perceptron::Perceptron()
+{
+	dataset = new DataSet;
+	mallocNetwork();
+	initWeightsAndBiasesWithRandomValues();
+}
+
+Perceptron::~Perceptron()
+{
+	freeNetwork();
+	delete dataset;
+}
+
 void Perceptron::mallocNetwork()
 {
+	int numLayers = networkStructure.size();
+
 	biases = new float* [numLayers];
 	activations = new float* [numLayers];
 	z_values = new float* [numLayers];
 	dCdz = new float* [numLayers];
 	weights = new float** [numLayers];
 	dCdw = new float** [numLayers];
-	expectedValues = new float[networkStructure[numLayers - 1]];
+	expectedValues = new float[networkStructure[numLayers - 1]]();
 
 	for (int L = 1; L < numLayers; L++)
 	{
@@ -20,24 +35,26 @@ void Perceptron::mallocNetwork()
 		dCdw[L] = new float* [J];
 		for (int j = 0; j < J; j++)
 		{
-			weights[L][j] = new float[K];
-			dCdw[L][j] = new float[K];
+			weights[L][j] = new float[K]();
+			dCdw[L][j] = new float[K]();
 		}
 
-		biases[L] = new float[J];
-		z_values[L] = new float[J];
-		dCdz[L] = new float[J];
+		biases[L] = new float[J]();
+		z_values[L] = new float[J]();
+		dCdz[L] = new float[J]();
 	}
 
 	for (int L = 0; L < numLayers; L++)
 	{
 		int J = networkStructure[L];
-		activations[L] = new float[J];
+		activations[L] = new float[J]();
 	}
 }
 
 void Perceptron::freeNetwork()
 {
+	int numLayers = networkStructure.size();
+
 	for (int L = 1; L < numLayers; L++)
 	{
 		int J = networkStructure[L];
@@ -75,6 +92,8 @@ inline static float randf()
 
 void Perceptron::initWeightsAndBiasesWithRandomValues()
 {
+	int numLayers = networkStructure.size();
+
 	for (int L = 1; L < numLayers; L++)
 	{
 		int J = networkStructure[L];
@@ -89,16 +108,11 @@ void Perceptron::initWeightsAndBiasesWithRandomValues()
 			}
 		}
 	}
+}
 
-	// for debugging purposes, I am also giving every activation a random value [0.0f, 1.0f];
-
-	for (int L = 0; L < numLayers; L++)
-	{
-		int J = networkStructure[L];
-		for (int j = 0; j < J; j++)
-		{
-			activations[L][j] = randomFloat(0.0f, 1.0f);
-		}
-	}
+int Perceptron::getCurrExpectedValue()
+{
+	if (indexCurrTrainingExample == -1) return -1;
+	return dataset->handWrittenDigits[indexCurrTrainingExample].trueValue;
 }
 

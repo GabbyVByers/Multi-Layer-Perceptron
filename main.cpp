@@ -10,6 +10,9 @@ int main()
 	OpenGL.disableVSYNC();
 	while (OpenGL.isAlive())
 	{
+		if (perceptron.doContinuousTraining)
+			perceptron.putThatClankerToWork();
+
 		OpenGL.processInput();
 		OpenGL.clearScreen();
 		OpenGL.renderNetwork();

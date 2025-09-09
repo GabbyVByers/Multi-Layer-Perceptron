@@ -17,7 +17,7 @@ void OpenGL::constructNetworkGeometry()
 	{
 		Vec2f position;
 		position.x = (-27.0f * dp.spacing) + ((j % 28) * dp.spacing);
-		position.y = (-13.5f * dp.spacing) + ((j / 28) * dp.spacing);
+		position.y = ( 13.5f * dp.spacing) - ((j / 28) * dp.spacing);
 		networkGeometry[0][j] = position;
 	}
 

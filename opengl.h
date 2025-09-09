@@ -2,9 +2,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -19,7 +16,7 @@ struct DrawingParameters
 {
 	float radius = 0.020f;
 	float margin = 0.0012f;
-	float stride = 0.4f;
+	float stride = 0.25f;
 	float spacing = 0.045f;
 	float output_spacing = 0.075f;
 };
