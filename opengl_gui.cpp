@@ -20,9 +20,24 @@ void OpenGL::initImGui() const
 
 void OpenGL::renderGUI()
 {
-	static std::vector<float> costHistory;
-	costHistory.push_back(perceptron->currentCost);
+	static std::vector<float> costLongHistory;
+	static int shortCounter = 0;
+	static float costShortHistory = 0.0f;
+	int maxShort = 100;
 
+	if (perceptron->doContinuousTraining)
+	{
+		costShortHistory += perceptron->currentCost;
+		shortCounter++;
+		if (shortCounter >= maxShort)
+		{
+			float average = costShortHistory / (float)maxShort;
+			costLongHistory.push_back(average);
+			shortCounter = 0;
+			costShortHistory = 0.0f;
+		}
+	}
+	
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -45,9 +60,9 @@ void OpenGL::renderGUI()
 	if (ImGui::Button("Single Step"))
 		perceptron->putThatClankerToWork();
 
-	if (ImPlot::BeginPlot("Cost Function", ImVec2(1, 1)))
+	if (ImPlot::BeginPlot("Cost Function History", ImVec2(-1, -1), ImPlotFlags_NoInputs))
 	{
-		ImPlot::PlotLine("Cost", &costHistory[0], costHistory.size(), 1.0f / costHistory.size());
+		ImPlot::PlotLine("", &costLongHistory[0], costLongHistory.size(), 1.0f / costLongHistory.size());
 		ImPlot::EndPlot();
 	}
 
