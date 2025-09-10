@@ -95,7 +95,7 @@
     <ClCompile Include="opengl_gui.cpp" />
     <ClCompile Include="opengl_lines.cpp" />
     <ClCompile Include="opengl_user_input.cpp" />
-    <ClCompile Include="opengl_utilities.cpp" />
+    <ClCompile Include="opengl_constructor.cpp" />
     <ClCompile Include="perceptron_memory.cpp" />
     <ClCompile Include="perceptron_propagate.cpp" />
     <ClCompile Include="profiler_members.cpp" />
@@ -127,7 +127,7 @@
     <ClInclude Include="perceptron.h" />
     <ClInclude Include="profiler.h" />
     <ClInclude Include="random.h" />
-    <ClInclude Include="sigmoid.h" />
+    <ClInclude Include="nonlinear_funcs.h" />
     <ClInclude Include="vec2f.h" />
   </ItemGroup>
   <ItemGroup>

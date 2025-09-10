@@ -2,9 +2,21 @@
 #include "opengl.h"
 #include "random.h"
 
+void OpenGL::renderNetwork()
+{
+	profiler.start();
+	constructNetworkGeometry();
+	renderLines();
+	renderCircles();
+	renderGUI();
+	profiler.stop();
+	renderingTime = profiler.time();
+}
+
 void OpenGL::constructNetworkGeometry()
 {
 	DrawingParameters dp;
+	networkGeometry.clear();
 
 	for (int L = 0; L < perceptron->networkStructure.size(); L++)
 	{
@@ -18,7 +30,7 @@ void OpenGL::constructNetworkGeometry()
 		Vec2f position;
 		position.x = (-27.0f * dp.spacing) + ((j % 28) * dp.spacing);
 		position.y = ( 13.5f * dp.spacing) - ((j / 28) * dp.spacing);
-		networkGeometry[0][j] = position;
+		networkGeometry[0][j] = position + globalOffset;
 	}
 
 	int numLayers = perceptron->networkStructure.size();
@@ -31,18 +43,8 @@ void OpenGL::constructNetworkGeometry()
 			Vec2f position;
 			position.x = dp.stride * (float)L;
 			position.y = (spacing * j) - (spacing * (J - 1) * 0.5f);
-			networkGeometry[L][j] = position;
+			networkGeometry[L][j] = position + globalOffset;
 		}
 	}
-}
-
-void OpenGL::renderNetwork()
-{
-	profiler.start();
-	renderLines();
-	renderCircles();
-	renderGUI();
-	profiler.stop();
-	renderingTime = profiler.time();
 }
 

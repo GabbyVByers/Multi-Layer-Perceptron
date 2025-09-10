@@ -48,6 +48,7 @@ public:
 	std::vector<std::vector<Vec2f>> networkGeometry;
 	std::vector<CircleVertex> circleVertices;
 	std::vector<LineVertex> lineVertices;
+	Vec2f globalOffset;
 
 	unsigned int circleShaderProgram;
 	unsigned int circleVAO;
@@ -57,7 +58,7 @@ public:
 	unsigned int lineVAO;
 	unsigned int lineVBO;
 
-	// utilities
+	// opengl_constructor.cpp
 	OpenGL(int initWidth, int initHeight, std::string title, Perceptron* ptr);
 	~OpenGL();
 	bool isAlive();
@@ -67,23 +68,23 @@ public:
 	void swapBuffers();
 	std::string loadSourceFile(std::string filePath);
 
-	// rendering
+	// opengl_geometry.cpp
 	void constructNetworkGeometry();
 	void renderNetwork();
 
-	// circles
+	// opengl_circles.cpp
 	void initCircleRendering();
 	void renderCircles();
 
-	// lines
+	// opengl_lines.cpp
 	void initLineRendering();
 	void renderLines();
 
-	// gui
+	// opengl_gui.cpp
 	void initImGui() const;
 	void renderGUI();
 
-	// user_input
+	// opengl_user_input.cpp
 	void processInput();
 };
 

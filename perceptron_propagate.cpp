@@ -1,6 +1,6 @@
 
 #include "perceptron.h"
-#include "sigmoid.h"
+#include "nonlinear_funcs.h"
 
 void Perceptron::putThatClankerToWork()
 {

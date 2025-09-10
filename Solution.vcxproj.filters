@@ -67,7 +67,7 @@
       <Filter>Miscellaneous Dependencies\ImGui Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="opengl_utilities.cpp">
+    <ClCompile Include="opengl_constructor.cpp">
       <Filter>Modules\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="opengl_circles.cpp">
@@ -144,7 +144,7 @@
     <ClInclude Include="vec2f.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="sigmoid.h">
+    <ClInclude Include="nonlinear_funcs.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="perceptron.h">

@@ -1,6 +1,5 @@
 
 #include "opengl.h"
-#include "sigmoid.h"
 
 void OpenGL::initLineRendering()
 {

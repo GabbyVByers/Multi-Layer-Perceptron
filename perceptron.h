@@ -8,7 +8,7 @@ class Perceptron
 {
 public:
 
-	const std::vector<int> networkStructure = { 784, 32, 32, 32, 32, 10 };
+	const std::vector<int> networkStructure = { 784, 32, 32, 32, 10 };
 	DataSet* dataset;
 	int indexCurrTrainingExample = 0;
 	float learningRate = 0.01f;
