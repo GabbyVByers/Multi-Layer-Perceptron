@@ -69,7 +69,7 @@ void OpenGL::renderLines()
 			{
 				Vec2f& prevous_neuron_pos = previous_layer_geometry[k];
 				float weight = perceptron->weights[L][j][k];
-				float trans = (L == 1) ? 0.1f : 0.4f;
+				float trans = (L == 1) ? 0.1f : 0.35f;
 				lineVertices.push_back({ neuron_pos.x, neuron_pos.y, weight, trans });
 				lineVertices.push_back({ prevous_neuron_pos.x, prevous_neuron_pos.y, weight, trans });
 			}

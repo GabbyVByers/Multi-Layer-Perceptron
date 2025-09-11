@@ -46,7 +46,8 @@ void OpenGL::renderGUI()
 	ImGui::Text("Rendering Time (ms): %g", renderingTime);
 	ImGui::Text("Training Time  (ms): %g", perceptron->trainingTime);
 	ImGui::Text("Network Cost : %g", perceptron->currentCost);
-	ImGui::Text("Expected Value: %i", perceptron->getCurrExpectedValue());
+	ImGui::Text("Ground Truth: %i", perceptron->getCurrExpectedValue());
+	ImGui::Text("Network's Choice: %i", perceptron->networkChoice);
 
 	if (ImGui::Button("Enable VSYNC"))
 		enableVSYNC();

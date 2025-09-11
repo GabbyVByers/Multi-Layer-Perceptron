@@ -182,5 +182,11 @@
     <None Include="train-labels.idx1-ubyte">
       <Filter>Modules\Training Data\MNIST Data</Filter>
     </None>
+    <None Include="t10k-images.idx3-ubyte">
+      <Filter>Modules\Training Data\MNIST Data</Filter>
+    </None>
+    <None Include="t10k-labels.idx1-ubyte">
+      <Filter>Modules\Training Data\MNIST Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

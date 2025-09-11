@@ -53,6 +53,18 @@ void Perceptron::propagateForwards()
 			activations[L][j] = sigmoid(z_values[L][j]);
 		}
 	}
+
+	int J = networkStructure[numLayers - 1];
+	float largestActivation = 0.0f;
+	for (int j = 0; j < J; j++)
+	{
+		float currActivation = activations[numLayers - 1][j];
+		if (currActivation > largestActivation)
+		{
+			largestActivation = currActivation;
+			networkChoice = j;
+		}
+	}
 }
 
 void Perceptron::propagateBackwards()

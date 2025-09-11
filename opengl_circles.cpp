@@ -57,15 +57,24 @@ void OpenGL::renderCircles()
 	int numLayers = perceptron->networkStructure.size();
 	for (int L = 0; L < numLayers; L++)
 	{
-		auto& layer = networkGeometry[L];
+		std::vector<Vec2f>& layer = networkGeometry[L];
 		int J = perceptron->networkStructure[L];
 		for (int j = 0; j < J; j++)
 		{
-			auto& neuron_pos = layer[j];
+			Vec2f& neuron_pos = layer[j];
 			float activation = perceptron->activations[L][j];
 			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, 1.0f, dp.radius });
 			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, activation, dp.radius - dp.margin });
 		}
+	}
+
+	for (int j = 0; j < 10; j++)
+	{
+		Vec2f neuron_pos = networkGeometry[numLayers - 1][j];
+		neuron_pos.x += dp.stride;
+		float trueValue = (j == perceptron->getCurrExpectedValue())? 1.0f : 0.0f;
+		circleVertices.push_back({ neuron_pos.x, neuron_pos.y, 1.0f, dp.radius });
+		circleVertices.push_back({ neuron_pos.x, neuron_pos.y, trueValue, dp.radius - dp.margin });
 	}
 
 	if (circleVertices.size() == 0) return;

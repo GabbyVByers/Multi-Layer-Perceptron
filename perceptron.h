@@ -11,9 +11,10 @@ public:
 	const std::vector<int> networkStructure = { 784, 32, 32, 32, 10 };
 	DataSet* dataset;
 	int indexCurrTrainingExample = 0;
-	float learningRate = 0.01f;
+	float learningRate = 0.1f;
 	float currentCost = 0.0f;
 	bool doContinuousTraining = true;
+	int networkChoice = -1;
 
 	float*** weights        = nullptr;
 	float**  biases         = nullptr;

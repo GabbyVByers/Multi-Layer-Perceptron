@@ -135,6 +135,8 @@
     <None Include="glsl_circle.vert" />
     <None Include="glsl_line.frag" />
     <None Include="glsl_line.vert" />
+    <None Include="t10k-images.idx3-ubyte" />
+    <None Include="t10k-labels.idx1-ubyte" />
     <None Include="train-images.idx3-ubyte" />
     <None Include="train-labels.idx1-ubyte" />
   </ItemGroup>
