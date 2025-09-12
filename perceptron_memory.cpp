@@ -101,7 +101,7 @@ void Perceptron::initWeightsAndBiasesWithRandomValues()
 
 		for (int j = 0; j < J; j++)
 		{
-			biases[L][j] = randf();
+			//biases[L][j] = randf();
 			for (int k = 0; k < K; k++)
 			{
 				weights[L][j][k] = randf();

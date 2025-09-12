@@ -56,8 +56,8 @@ void OpenGL::renderLines()
 	int startLayer = (drawInputLayerWeights) ? 1 : 2;
 	for (int L = startLayer; L < numLayers; L++)
 	{
-		auto& previous_layer_geometry = networkGeometry[L - 1];
-		auto& layer_geometry = networkGeometry[L];
+		std::vector<Vec2f>& previous_layer_geometry = networkGeometry[L - 1];
+		std::vector<Vec2f>& layer_geometry = networkGeometry[L];
 
 		int K = perceptron->networkStructure[L - 1];
 		int J = perceptron->networkStructure[L];
@@ -74,6 +74,36 @@ void OpenGL::renderLines()
 				lineVertices.push_back({ prevous_neuron_pos.x, prevous_neuron_pos.y, weight, trans });
 			}
 		}
+	}
+
+	std::vector<Vec2f> arrowOffsets =
+	{
+		{ 1.0f,  0.0f },
+		{ 2.0f,  1.0f },
+		{ 1.0f,  0.0f },
+		{ 2.0f, -1.0f },
+		{ 2.0f, -1.0f },
+		{ 2.0f, -0.3f },
+		{ 2.0f,  1.0f },
+		{ 2.0f,  0.3f },
+		{ 2.0f, -0.3f },
+		{ 3.0f, -0.3f },
+		{ 2.0f,  0.3f },
+		{ 3.0f,  0.3f },
+		{ 3.0f, -0.3f },
+		{ 3.0f,  0.3f }
+	};
+
+	Vec2f& choicePos = networkGeometry[numLayers - 1][perceptron->networkChoice];
+	for (int i = 0; i < arrowOffsets.size(); i++)
+	{
+		lineVertices.push_back(
+			{
+				choicePos.x + (arrowOffsets[i].x * dp.spacing),
+				choicePos.y + (arrowOffsets[i].y * dp.spacing),
+				20.0f, 1.0f
+			}
+		);
 	}
 
 	if (lineVertices.size() == 0) return;

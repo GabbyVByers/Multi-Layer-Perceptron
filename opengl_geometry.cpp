@@ -15,7 +15,6 @@ void OpenGL::renderNetwork()
 
 void OpenGL::constructNetworkGeometry()
 {
-	DrawingParameters dp;
 	networkGeometry.clear();
 
 	for (int L = 0; L < perceptron->networkStructure.size(); L++)

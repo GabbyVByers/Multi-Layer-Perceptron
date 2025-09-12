@@ -42,9 +42,10 @@ public:
 	GLFWwindow* window = nullptr;
 	Profiler profiler;
 	double renderingTime = 0.0;
-
+	DrawingParameters dp;
 	Perceptron* perceptron = nullptr;
 	bool drawInputLayerWeights = true;
+
 	std::vector<std::vector<Vec2f>> networkGeometry;
 	std::vector<CircleVertex> circleVertices;
 	std::vector<LineVertex> lineVertices;
