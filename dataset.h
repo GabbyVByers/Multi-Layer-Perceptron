@@ -14,7 +14,7 @@ public:
 
 	std::vector<HandWrittenDigit> handWrittenDigits;
 
-	// members
+	// dataset_members.cpp
 	DataSet();
 	~DataSet();
 };

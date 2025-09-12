@@ -2,18 +2,32 @@
 #include "perceptron.h"
 #include "nonlinear_funcs.h"
 
-void Perceptron::putThatClankerToWork()
+void Perceptron::continuouslyTrain()
 {
 	profiler.start();
-	indexCurrTrainingExample++;
+	for (int i = 0; i < trainingExamplesPerFrame; i++)
+	{
+		indexCurrTrainingExample++;
+		indexCurrTrainingExample %= dataset->handWrittenDigits.size();
+		mapTrainingExampleToInputLayer();
+		propagateForwards();
+		trackTotalCost();
+		propagateBackwards();
+		updateWeightsAndBiases();
+	}
+	profiler.stop();
+	trainingTime = profiler.time();
+}
+
+void Perceptron::trainOnASingleExample(int direction)
+{
+	indexCurrTrainingExample += direction;
 	indexCurrTrainingExample %= dataset->handWrittenDigits.size();
 	mapTrainingExampleToInputLayer();
 	propagateForwards();
 	trackTotalCost();
 	propagateBackwards();
 	updateWeightsAndBiases();
-	profiler.stop();
-	trainingTime = profiler.time();
 }
 
 void Perceptron::mapTrainingExampleToInputLayer()
@@ -133,17 +147,6 @@ void Perceptron::updateWeightsAndBiases()
 				weights[L][j][k] -= dCdw[L][j][k] * learningRate;
 			}
 		}
-	}
-}
-
-void Perceptron::trackTotalCost()
-{
-	currentCost = 0.0f;
-	int numLayers = networkStructure.size();
-	for (int i = 0; i < 10; i++)
-	{
-		float diff = activations[numLayers - 1][i] - expectedValues[i];
-		currentCost += diff * diff;
 	}
 }
 

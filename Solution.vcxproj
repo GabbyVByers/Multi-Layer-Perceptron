@@ -96,6 +96,7 @@
     <ClCompile Include="opengl_lines.cpp" />
     <ClCompile Include="opengl_user_input.cpp" />
     <ClCompile Include="opengl_constructor.cpp" />
+    <ClCompile Include="perceptron_history.cpp" />
     <ClCompile Include="perceptron_memory.cpp" />
     <ClCompile Include="perceptron_propagate.cpp" />
     <ClCompile Include="profiler_members.cpp" />

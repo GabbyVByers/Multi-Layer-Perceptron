@@ -19,25 +19,7 @@ void OpenGL::initImGui() const
 }
 
 void OpenGL::renderGUI()
-{
-	static std::vector<float> costLongHistory;
-	static int shortCounter = 0;
-	static float costShortHistory = 0.0f;
-	int maxShort = 100;
-
-	if (perceptron->doContinuousTraining)
-	{
-		costShortHistory += perceptron->currentCost;
-		shortCounter++;
-		if (shortCounter >= maxShort)
-		{
-			float average = costShortHistory / (float)maxShort;
-			costLongHistory.push_back(average);
-			shortCounter = 0;
-			costShortHistory = 0.0f;
-		}
-	}
-	
+{	
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -49,21 +31,36 @@ void OpenGL::renderGUI()
 	ImGui::Text("Ground Truth: %i", perceptron->getCurrExpectedValue());
 	ImGui::Text("Network's Choice: %i", perceptron->networkChoice);
 
-	if (ImGui::Button("Enable VSYNC"))
+	ImGui::Text("Training Examples Per Frame");
+	ImGui::SliderInt("", &perceptron->trainingExamplesPerFrame, 1, 256);
+
+	if (ImGui::Button("    Enable  VSYNC     "))
 		enableVSYNC();
-	ImGui::SameLine();
-	if (ImGui::Button("Disable VSYNC"))
+
+	if (ImGui::Button("    Disable VSYNC     "))
 		disableVSYNC();
 
-	if (ImGui::Button("Toggle Training"))
-		perceptron->doContinuousTraining = !perceptron->doContinuousTraining;
+	if (ImGui::Button("   Toggle Training    "))
+		perceptron->isContinuouslyTraining = !perceptron->isContinuouslyTraining;
 
-	if (ImGui::Button("Single Step"))
-		perceptron->putThatClankerToWork();
+	if (ImGui::Button("     Next Example     "))
+		perceptron->trainOnASingleExample(1);
+
+	if (ImGui::Button("   Previous Example   "))
+		perceptron->trainOnASingleExample(-1);
+
+	if (ImGui::Button("     Reset Network    "))
+		perceptron->initWeightsWithRandomValues();
 
 	if (ImPlot::BeginPlot("Cost Function History", ImVec2(-1, -1), ImPlotFlags_NoInputs))
 	{
-		ImPlot::PlotLine("", &costLongHistory[0], costLongHistory.size(), 1.0f / costLongHistory.size());
+		std::vector<float>& history = perceptron->longRunCostHistory;
+		
+		ImPlot::SetupAxes("Iteration", "Cost");
+		ImPlot::SetupAxisLimits(ImAxis_X1, 0.0, (double)history.size(), ImGuiCond_Always);
+		ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 1.0, ImGuiCond_Always);
+
+		ImPlot::PlotLine("", &history[0], history.size());
 		ImPlot::EndPlot();
 	}
 

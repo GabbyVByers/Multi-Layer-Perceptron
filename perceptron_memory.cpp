@@ -6,7 +6,7 @@ Perceptron::Perceptron()
 {
 	dataset = new DataSet;
 	mallocNetwork();
-	initWeightsAndBiasesWithRandomValues();
+	initWeightsWithRandomValues();
 }
 
 Perceptron::~Perceptron()
@@ -90,7 +90,7 @@ inline static float randf()
 	return randomFloat(-1.0f, 1.0f);
 }
 
-void Perceptron::initWeightsAndBiasesWithRandomValues()
+void Perceptron::initWeightsWithRandomValues()
 {
 	int numLayers = networkStructure.size();
 
