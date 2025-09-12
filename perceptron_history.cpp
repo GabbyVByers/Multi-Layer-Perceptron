@@ -23,7 +23,7 @@ void Perceptron::trackCostHistory()
 	shortRunCounter++;
 	shortRunCostAccumulator += currentCost;
 
-	int max = 1000;
+	int max = 5000;
 	if (shortRunCounter >= max)
 	{
 		float averageCost = shortRunCostAccumulator / (float)max;

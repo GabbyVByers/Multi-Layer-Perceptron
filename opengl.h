@@ -41,7 +41,9 @@ public:
 	
 	GLFWwindow* window = nullptr;
 	Profiler profiler;
+	Profiler FPSTracker;
 	double renderingTime = 0.0;
+	double mainLoopTime = 0.0;
 	DrawingParameters dp;
 	Perceptron* perceptron = nullptr;
 	bool drawInputLayerWeights = true;

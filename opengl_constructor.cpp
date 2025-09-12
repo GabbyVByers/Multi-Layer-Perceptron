@@ -50,6 +50,9 @@ void OpenGL::swapBuffers()
 {
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+	FPSTracker.stop();
+	mainLoopTime = FPSTracker.time();
+	FPSTracker.start();
 }
 
 std::string OpenGL::loadSourceFile(std::string filePath)

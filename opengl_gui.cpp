@@ -25,13 +25,14 @@ void OpenGL::renderGUI()
 	ImGui::NewFrame();
 	ImGui::Begin("Debugger");
 
+	ImGui::Text("FPS: %g", 1000.0 / mainLoopTime);
 	ImGui::Text("Rendering Time (ms): %g", renderingTime);
 	ImGui::Text("Training Time  (ms): %g", perceptron->trainingTime);
 	ImGui::Text("Network Cost : %g", perceptron->currentCost);
 	ImGui::Text("Ground Truth: %i", perceptron->getCurrExpectedValue());
 	ImGui::Text("Network's Choice: %i", perceptron->networkChoice);
 
-	ImGui::Text("Training Examples Per Frame");
+	ImGui::Text("Training Examples Per Batch");
 	ImGui::SliderInt("", &perceptron->trainingExamplesPerFrame, 1, 256);
 
 	if (ImGui::Button("    Enable  VSYNC     "))
@@ -56,7 +57,7 @@ void OpenGL::renderGUI()
 	{
 		std::vector<float>& history = perceptron->longRunCostHistory;
 		
-		ImPlot::SetupAxes("Iteration", "Cost");
+		//ImPlot::SetupAxes("Iteration Batch", "Cost");
 		ImPlot::SetupAxisLimits(ImAxis_X1, 0.0, (double)history.size(), ImGuiCond_Always);
 		ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 1.0, ImGuiCond_Always);
 
