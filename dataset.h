@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 struct HandWrittenDigit
 {
@@ -15,7 +16,7 @@ public:
 	std::vector<HandWrittenDigit> handWrittenDigits;
 
 	// dataset_members.cpp
-	DataSet();
+	DataSet(std::string type);
 	~DataSet();
 };
 

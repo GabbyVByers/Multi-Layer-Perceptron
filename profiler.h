@@ -13,6 +13,7 @@ public:
 	Profiler() {}
 	~Profiler() {}
 
+	// profiler_members.cpp
 	void start();
 	void stop();
 	double time() const;

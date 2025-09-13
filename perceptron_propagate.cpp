@@ -7,13 +7,7 @@ void Perceptron::continuouslyTrain()
 	profiler.start();
 	for (int i = 0; i < trainingExamplesPerFrame; i++)
 	{
-		indexCurrTrainingExample++;
-		indexCurrTrainingExample %= dataset->handWrittenDigits.size();
-		mapTrainingExampleToInputLayer();
-		propagateForwards();
-		trackTotalCost();
-		propagateBackwards();
-		updateWeightsAndBiases();
+		trainOnASingleExample(1);
 	}
 	profiler.stop();
 	trainingTime = profiler.time();
@@ -22,17 +16,42 @@ void Perceptron::continuouslyTrain()
 void Perceptron::trainOnASingleExample(int direction)
 {
 	indexCurrTrainingExample += direction;
-	indexCurrTrainingExample %= dataset->handWrittenDigits.size();
-	mapTrainingExampleToInputLayer();
+	indexCurrTrainingExample %= trainingDataset->handWrittenDigits.size();
+	mapTrainingExampleToInputLayer(true);
 	propagateForwards();
 	trackTotalCost();
 	propagateBackwards();
 	updateWeightsAndBiases();
 }
 
-void Perceptron::mapTrainingExampleToInputLayer()
+void Perceptron::beckmarkNetworkAgainstTestExamples()
 {
-	HandWrittenDigit trainingExample = dataset->handWrittenDigits[indexCurrTrainingExample];
+	for (int i = 0; i < trainingExamplesPerFrame; i++)
+	{
+		if (indexCurrTestExample >= ((int)testDataset->handWrittenDigits.size() - 1))
+			return;
+		indexCurrTestExample++;
+		mapTrainingExampleToInputLayer(false);
+		propagateForwards();
+		if (networkChoice == getCurrExpectedValue())
+			correctlyCategorizedTestExamples++;
+		benchmarkAccuracy = (float)correctlyCategorizedTestExamples / (float)(indexCurrTestExample + 1);
+	}
+}
+
+void Perceptron::mapTrainingExampleToInputLayer(bool mapTraining)
+{
+	HandWrittenDigit trainingExample;
+
+	if (mapTraining)
+	{
+		trainingExample = trainingDataset->handWrittenDigits[indexCurrTrainingExample];
+	}
+	else
+	{
+		trainingExample = testDataset->handWrittenDigits[indexCurrTestExample];
+	}
+
 	int trueValue = trainingExample.trueValue;
 
 	for (int i = 0; i < 10; i++)

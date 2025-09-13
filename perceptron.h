@@ -9,15 +9,22 @@ class Perceptron
 public:
 
 	const std::vector<int> networkStructure = { 784, 32, 32, 32, 10 };
-	DataSet* dataset;
-	int indexCurrTrainingExample = 0;
+	int numParameters = 0;
+	DataSet* trainingDataset = nullptr;
+	DataSet* testDataset = nullptr;
+	int indexCurrTrainingExample = -1;
+	int indexCurrTestExample = -1;
 	float learningRate = 0.01f;
 	bool isContinuouslyTraining = true;
+	bool isBeingBenchmarked = false;
 	int networkChoice = -1;
 	int trainingExamplesPerFrame = 128;
+	int correctlyCategorizedTestExamples = 0;
+	float benchmarkAccuracy = 0.0f;
 	
 	float currentCost = 0.0f;
 	std::vector<float> longRunCostHistory;
+	std::vector<float> accuracyHistory;
 
 	float*** weights        = nullptr;
 	float**  biases         = nullptr;
@@ -41,14 +48,15 @@ public:
 	// perceptron_propagate.cpp
 	void continuouslyTrain();
 	void trainOnASingleExample(int direction);
-	void mapTrainingExampleToInputLayer();
+	void beckmarkNetworkAgainstTestExamples();
+	void mapTrainingExampleToInputLayer(bool mapTraining);
 	void propagateForwards();
 	void propagateBackwards();
 	void updateWeightsAndBiases();
 
 	// perceptron_history.cpp
 	void trackTotalCost();
-	void trackCostHistory();
-	void trackAccuracyHistory();
+	void trackCostHistory(int max);
+	void trackAccuracyHistory(int max);
 };
 

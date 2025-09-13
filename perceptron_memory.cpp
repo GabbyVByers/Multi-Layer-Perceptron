@@ -4,7 +4,16 @@
 
 Perceptron::Perceptron()
 {
-	dataset = new DataSet;
+	trainingDataset = new DataSet("training");
+	testDataset = new DataSet("testing");
+
+	int numLayers = networkStructure.size();
+	for (int L = 1; L < numLayers; L++)
+	{
+		numParameters += networkStructure[L];
+		numParameters += networkStructure[L] * networkStructure[L - 1];
+	}
+
 	mallocNetwork();
 	initWeightsWithRandomValues();
 }
@@ -12,7 +21,8 @@ Perceptron::Perceptron()
 Perceptron::~Perceptron()
 {
 	freeNetwork();
-	delete dataset;
+	delete trainingDataset;
+	delete testDataset;
 }
 
 void Perceptron::mallocNetwork()
@@ -101,10 +111,9 @@ void Perceptron::initWeightsWithRandomValues()
 
 		for (int j = 0; j < J; j++)
 		{
-			//biases[L][j] = randf();
 			for (int k = 0; k < K; k++)
 			{
-				weights[L][j][k] = randf();
+				weights[L][j][k] = randf() * 0.5f;
 			}
 		}
 	}
@@ -112,7 +121,16 @@ void Perceptron::initWeightsWithRandomValues()
 
 int Perceptron::getCurrExpectedValue()
 {
-	if (indexCurrTrainingExample == -1) return -1;
-	return dataset->handWrittenDigits[indexCurrTrainingExample].trueValue;
+	if (isBeingBenchmarked)
+	{
+		if (indexCurrTestExample == -1) return -1;
+		return testDataset->handWrittenDigits[indexCurrTestExample].trueValue;
+	}
+	else
+	{
+		if (indexCurrTrainingExample == -1) return -1;
+		return trainingDataset->handWrittenDigits[indexCurrTrainingExample].trueValue;
+	}
+	
 }
 

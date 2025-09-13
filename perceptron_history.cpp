@@ -11,19 +11,18 @@ void Perceptron::trackTotalCost()
 		currentCost += diff * diff;
 	}
 
-	trackCostHistory();
-	trackAccuracyHistory();
+	int max = 5000;
+	trackCostHistory(max);
+	trackAccuracyHistory(max);
 }
 
-void Perceptron::trackCostHistory()
+void Perceptron::trackCostHistory(int max)
 {
 	static int shortRunCounter = 0;
 	static float shortRunCostAccumulator = 0.0f;
-
 	shortRunCounter++;
 	shortRunCostAccumulator += currentCost;
 
-	int max = 5000;
 	if (shortRunCounter >= max)
 	{
 		float averageCost = shortRunCostAccumulator / (float)max;
@@ -31,11 +30,20 @@ void Perceptron::trackCostHistory()
 		shortRunCounter = 0;
 		shortRunCostAccumulator = 0.0f;
 	}
-
 }
 
-void Perceptron::trackAccuracyHistory()
+void Perceptron::trackAccuracyHistory(int max)
 {
-
+	static int totalPredictionsCounter = 0;
+	static int correctPredictionCounter = 0;
+	if (networkChoice == getCurrExpectedValue())
+		correctPredictionCounter++;
+	totalPredictionsCounter++;
+	if (totalPredictionsCounter >= max)
+	{
+		accuracyHistory.push_back((float)correctPredictionCounter / (float)max);
+		correctPredictionCounter = 0;
+		totalPredictionsCounter = 0;
+	}
 }
 

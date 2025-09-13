@@ -26,11 +26,24 @@ struct LabelFileHeader
 	unsigned int numLabels = 0;
 };
 
-DataSet::DataSet()
+DataSet::DataSet(std::string type)
 {
-	std::ifstream digits_file("train-images.idx3-ubyte", std::ios::binary | std::ios::ate);
+	std::ifstream digits_file;
+	std::ifstream labels_file;
+
+	if (type == "training")
+	{
+		digits_file = std::ifstream("train-images.idx3-ubyte", std::ios::binary | std::ios::ate);
+		labels_file = std::ifstream("train-labels.idx1-ubyte", std::ios::binary | std::ios::ate);
+	}
+
+	if (type == "testing")
+	{
+		digits_file = std::ifstream("t10k-images.idx3-ubyte", std::ios::binary | std::ios::ate);
+		labels_file = std::ifstream("t10k-labels.idx1-ubyte", std::ios::binary | std::ios::ate);
+	}
+	
 	size_t sizeDigits = digits_file.tellg(); digits_file.seekg(0, std::ios::beg);
-	std::ifstream labels_file("train-labels.idx1-ubyte", std::ios::binary | std::ios::ate);
 	size_t sizeLabels = labels_file.tellg(); labels_file.seekg(0, std::ios::beg);
 
 	ImageFileHeader imageFileHeader;
@@ -76,7 +89,7 @@ DataSet::DataSet()
 
 DataSet::~DataSet()
 {
-	for (auto& digit : handWrittenDigits)
+	for (HandWrittenDigit& digit : handWrittenDigits)
 	{
 		delete[] digit.pixels;
 	}
