@@ -21,5 +21,46 @@ void OpenGL::processInput()
 
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS)
 		globalOffset = globalOffset + relativeMouseMovement;
+
+	if (perceptron->isInDrawingMode)
+	{
+		if ((relativeMouseMovement.x != 0.0f) || (relativeMouseMovement.y != 0.0f))
+		{
+			if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+			{
+				DrawingParameters dp;
+				for (int j = 0; j < 784; j++)
+				{
+					Vec2f position = networkGeometry[0][j];
+					float dx = position.x - currMousePosition.x;
+					float dy = position.y - currMousePosition.y;
+					float distToMouse = sqrt((dx * dx) + (dy * dy));
+					float radius = 1.5f * dp.spacing;
+					if (distToMouse < radius)
+					{
+						float frac = radius / distToMouse;
+						perceptron->activations[0][j] += frac * 0.075f;
+					}
+				}
+			}
+
+			else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+			{
+				DrawingParameters dp;
+				for (int j = 0; j < 784; j++)
+				{
+					Vec2f position = networkGeometry[0][j];
+					float dx = position.x - currMousePosition.x;
+					float dy = position.y - currMousePosition.y;
+					float distToMouse = sqrt((dx * dx) + (dy * dy));
+					float radius = 3.5f * dp.spacing;
+					if (distToMouse < radius)
+					{
+						perceptron->activations[0][j] = 0.0f;
+					}
+				}
+			}
+		}
+	}
 }
 

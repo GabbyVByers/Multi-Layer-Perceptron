@@ -68,15 +68,18 @@ void OpenGL::renderCircles()
 		}
 	}
 
-	for (int j = 0; j < 10; j++)
+	if (!perceptron->isInDrawingMode)
 	{
-		Vec2f neuron_pos = networkGeometry[numLayers - 1][j];
-		neuron_pos.x += dp.stride;
-		float trueValue = (j == perceptron->getCurrExpectedValue())? 1.0f : 0.0f;
-		circleVertices.push_back({ neuron_pos.x, neuron_pos.y, 1.0f, dp.radius });
-		circleVertices.push_back({ neuron_pos.x, neuron_pos.y, trueValue, dp.radius - dp.margin });
+		for (int j = 0; j < 10; j++)
+		{
+			Vec2f neuron_pos = networkGeometry[numLayers - 1][j];
+			neuron_pos.x += dp.stride;
+			float trueValue = (j == perceptron->getCurrExpectedValue()) ? 1.0f : 0.0f;
+			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, 1.0f, dp.radius });
+			circleVertices.push_back({ neuron_pos.x, neuron_pos.y, trueValue, dp.radius - dp.margin });
+		}
 	}
-
+	
 	if (circleVertices.size() == 0) return;
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CircleVertex) * circleVertices.size(), &circleVertices[0], GL_STATIC_DRAW);
 	glDrawArrays(GL_POINTS, 0, (GLsizei)circleVertices.size());

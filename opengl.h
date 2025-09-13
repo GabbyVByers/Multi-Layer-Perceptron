@@ -15,7 +15,7 @@
 struct DrawingParameters
 {
 	float radius = 0.020f;
-	float margin = 0.0012f;
+	float margin = 0.002f;
 	float stride = 0.2f;
 	float spacing = 0.045f;
 	float output_spacing = 0.075f;

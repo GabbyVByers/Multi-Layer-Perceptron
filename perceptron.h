@@ -21,6 +21,7 @@ public:
 	int trainingExamplesPerFrame = 128;
 	int correctlyCategorizedTestExamples = 0;
 	float benchmarkAccuracy = 0.0f;
+	bool isInDrawingMode = false;
 	
 	float currentCost = 0.0f;
 	std::vector<float> longRunCostHistory;

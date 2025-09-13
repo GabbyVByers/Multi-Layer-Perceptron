@@ -12,7 +12,7 @@ void OpenGL::initImGui() const
 	ImGui::CreateContext();
 	ImPlot::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
-	io.FontGlobalScale = 2.0f;
+	io.FontGlobalScale = 1.0f;
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
@@ -24,7 +24,7 @@ void OpenGL::renderGUI()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	if (!perceptron->isBeingBenchmarked)
+	if (!perceptron->isBeingBenchmarked && !perceptron->isInDrawingMode)
 	{
 		ImGui::Begin("Debugger");
 
@@ -37,7 +37,20 @@ void OpenGL::renderGUI()
 		ImGui::Text("Network's Choice: %i", perceptron->networkChoice);
 
 		ImGui::Text("Training Examples Per Batch");
-		ImGui::SliderInt("", &perceptron->trainingExamplesPerFrame, 1, 256);
+		ImGui::SliderInt("Batch Size", &perceptron->trainingExamplesPerFrame, 1, 256);
+		ImGui::Text("Learning Rate");
+		ImGui::SliderFloat("Rate", &perceptron->learningRate, 0.0f, 0.02f);
+
+		static float guiScale = 1.0f;
+
+		if (ImGui::Button("       Big GUI        "))
+			guiScale = 2.0f;
+
+		if (ImGui::Button("      Small GUI       "))
+			guiScale = 1.0f;
+
+		ImGuiIO& io = ImGui::GetIO();
+		io.FontGlobalScale = guiScale;
 
 		if (ImGui::Button("    Enable  VSYNC     "))
 			enableVSYNC();
@@ -65,7 +78,20 @@ void OpenGL::renderGUI()
 			perceptron->isBeingBenchmarked = true;
 		}
 
-		if (ImPlot::BeginPlot("Cost Function", ImVec2(-1, 500), ImPlotFlags_NoInputs))
+		if (ImGui::Button("     Drawing Mode     "))
+		{
+			perceptron->isContinuouslyTraining = false;
+			perceptron->isBeingBenchmarked = false;
+			perceptron->isInDrawingMode = true;
+			for (int j = 0; j < 784; j++)
+			{
+				perceptron->activations[0][j] = 0.0f;
+			}
+		}
+
+		int windowHeight = (guiScale == 1.0f)? 250 : 420;
+
+		if (ImPlot::BeginPlot("Cost Function", ImVec2(-1, windowHeight), ImPlotFlags_NoInputs))
 		{
 			std::vector<float>& costHistory = perceptron->longRunCostHistory;
 
@@ -77,7 +103,7 @@ void OpenGL::renderGUI()
 			ImPlot::EndPlot();
 		}
 
-		if (ImPlot::BeginPlot("Model Accuracy", ImVec2(-1, 500), ImPlotFlags_NoInputs))
+		if (ImPlot::BeginPlot("Model Accuracy", ImVec2(-1, windowHeight), ImPlotFlags_NoInputs))
 		{
 			std::vector<float>& accuracyHistory = perceptron->accuracyHistory;
 
@@ -91,7 +117,8 @@ void OpenGL::renderGUI()
 
 		ImGui::End();
 	}
-	else
+	
+	if (perceptron->isBeingBenchmarked && !perceptron->isInDrawingMode)
 	{
 		ImGui::Begin("Benchmarking");
 		ImGui::Text("The Network has never been Trained");
@@ -110,6 +137,24 @@ void OpenGL::renderGUI()
 		if (ImGui::Button("   Exit Benchmarking  "))
 		{
 			perceptron->isBeingBenchmarked = false;
+			perceptron->trainOnASingleExample(0);
+		}
+
+		ImGui::End();
+	}
+
+	if (perceptron->isInDrawingMode)
+	{
+		ImGui::Begin("Drawing Mode");
+
+		ImGui::Text("Left Mouse to Draw");
+		ImGui::Text("Right Mouse to Erase");
+		ImGui::Text("Network's Choice: %i", perceptron->networkChoice);
+		ImGui::Text("Confidence: %g", perceptron->activations[perceptron->networkStructure.size() - 1][perceptron->networkChoice]);
+
+		if (ImGui::Button("     Exit Drawing     "))
+		{
+			perceptron->isInDrawingMode = false;
 			perceptron->trainOnASingleExample(0);
 		}
 
