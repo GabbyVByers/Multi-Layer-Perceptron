@@ -48,7 +48,7 @@ public:
 	// perceptron_propagate.cpp
 	void continuouslyTrain();
 	void trainOnASingleExample(int direction);
-	void beckmarkNetworkAgainstTestExamples();
+	void benckmarkNetworkAgainstTestExamples();
 	void mapTrainingExampleToInputLayer(bool mapTraining);
 	void propagateForwards();
 	void propagateBackwards();

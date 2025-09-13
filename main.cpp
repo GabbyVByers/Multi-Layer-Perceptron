@@ -14,7 +14,7 @@ int main()
 			perceptron.continuouslyTrain();
 
 		if (perceptron.isBeingBenchmarked)
-			perceptron.beckmarkNetworkAgainstTestExamples();
+			perceptron.benckmarkNetworkAgainstTestExamples();
 
 		OpenGL.processInput();
 		OpenGL.clearScreen();

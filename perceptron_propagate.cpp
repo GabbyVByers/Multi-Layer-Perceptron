@@ -24,7 +24,7 @@ void Perceptron::trainOnASingleExample(int direction)
 	updateWeightsAndBiases();
 }
 
-void Perceptron::beckmarkNetworkAgainstTestExamples()
+void Perceptron::benckmarkNetworkAgainstTestExamples()
 {
 	for (int i = 0; i < trainingExamplesPerFrame; i++)
 	{
