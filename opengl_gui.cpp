@@ -99,7 +99,9 @@ void OpenGL::renderGUI()
 			ImPlot::SetupAxisLimits(ImAxis_X1, 0.0, (double)costHistory.size(), ImGuiCond_Always);
 			ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 1.0, ImGuiCond_Always);
 
-			ImPlot::PlotLine("", &costHistory[0], costHistory.size());
+			if (costHistory.size() > 0) {
+				ImPlot::PlotLine("", &costHistory[0], costHistory.size());
+			}
 			ImPlot::EndPlot();
 		}
 
@@ -111,7 +113,9 @@ void OpenGL::renderGUI()
 			ImPlot::SetupAxisLimits(ImAxis_X1, 0.0, (double)accuracyHistory.size(), ImGuiCond_Always);
 			ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 1.0, ImGuiCond_Always);
 
-			ImPlot::PlotLine("", &accuracyHistory[0], accuracyHistory.size());
+			if (accuracyHistory.size() > 0) {
+				ImPlot::PlotLine("", &accuracyHistory[0], accuracyHistory.size());
+			}
 			ImPlot::EndPlot();
 		}
 
